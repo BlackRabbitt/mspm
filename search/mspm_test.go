@@ -11,7 +11,6 @@ mspm
 another
 example
 case
-case-sensitive
 ball`
 
 func TestMultiTermMatch(t *testing.T) {
@@ -19,7 +18,7 @@ func TestMultiTermMatch(t *testing.T) {
 	words := strings.NewReader(patterns)
 	modelA.Build(words)
 
-	inputString := "mspm-algorithm is implemented to solve the problem of searching multiple keywords in an paragraph. For example in this test, if we search for mspm in this input string, the algorithm should return 2."
+	inputString := "mspm-algorithm is implemented to solve the problem of searching multiple keywords in an paragraph. For example in this test, if we search for mspm in this input string, the algorithm should return 2. Another TBD important thing is this algorithm is case-sensitive, i.e., if I search for 'Case' in this document then I will get 0 as an output but if I search for 'case' it will return me 2 instead of 4(ignoring Case)"
 	document := strings.NewReader(inputString)
 	output, err := modelA.MultiTermMatch(document)
 
@@ -27,9 +26,10 @@ func TestMultiTermMatch(t *testing.T) {
 		t.Log("Error must be nil")
 	}
 
-	if 3 != len(output) {
+	if 4 != len(output) {
 		t.Log("Test length of output")
-		t.Errorf("Expected: %d, Got: %d", 3, len(output))
+		t.Errorf("Expected: %d, Got: %d", 4, len(output))
+		t.Log(output)
 	}
 
 	if 2 != output["mspm"] {
@@ -37,13 +37,23 @@ func TestMultiTermMatch(t *testing.T) {
 		t.Errorf("Expected: %d, Got: %d", 2, output["mspm"])
 	}
 
-	if 1 != output["2"] {
+	if 2 != output["2"] {
 		t.Log("Test count of number '2' keyword appearing in document")
-		t.Errorf("Expected: %d, Got: %d", 1, output["2"])
+		t.Errorf("Expected: %d, Got: %d", 2, output["2"])
 	}
 
 	if 1 != output["example"] {
 		t.Log("Test count of 'example' keyword appearing in document")
 		t.Errorf("Expected: %d, Got: %d", 2, output["example"])
+	}
+
+	if 2 != output["case"] {
+		t.Log("Test for case sensitive")
+		t.Errorf("Expected: %d, Got: %d", 2, output["case"])
+	}
+
+	if 0 != output["Case"] {
+		t.Log("Test for case sensitive")
+		t.Errorf("Expected: %d, Got: %d", 0, output["Case"])
 	}
 }
