@@ -6,25 +6,22 @@ const (
 )
 
 type Trie interface {
-	Insert(k []byte)                          // Insert key into trinode datastructure. Complexity O(k)
-	Search(k []byte) (found bool, final bool) // search for key in datastructure. Complexity O(k). found=ngram-substringMatch?, final=exactMatch?
+	Insert(k []byte)                          // Insert key into trie node datastructure. TimeComplexity = O(k)
+	Search(k []byte) (found bool, final bool) // search for key in datastructure. TimeComplexity = O(k)
 }
 
-// Trie ds implemented with fixed size array. This may consume more space. Refer to TrieHashNode that implements hashmap (hashtable) instead of array.
+// Trie representation using fixed-size array. This representation might consume more space in some cases and is not recommended, please refer to TrieHashNode for hashImplementation.
 type TrieNode struct {
 	Children [CHAR_SIZE]*TrieNode
 
 	FinalState bool
 }
 
-// NewNode returns new TrieNode
 func NewTrieNode() (tNode *TrieNode) {
 	tNode = &TrieNode{FinalState: false}
 	return
 }
 
-// Insert key into trieNode if not present
-// If the key is prefix of trie node, just marks final/leaf node.
 func (root *TrieNode) Insert(key []byte) {
 	var index byte
 
@@ -42,7 +39,6 @@ func (root *TrieNode) Insert(key []byte) {
 	tNode.FinalState = true
 }
 
-// Search for key in trie
 func (root *TrieNode) Search(key []byte) (found bool, final bool) {
 	var index byte
 

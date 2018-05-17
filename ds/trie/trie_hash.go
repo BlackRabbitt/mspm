@@ -1,9 +1,10 @@
 package trie
 
+// Trie representation using hash-table
 type TrieHashNode struct {
-	Children map[byte]*TrieHashNode
+	Children map[byte]*TrieHashNode // child nodes
 
-	FinalState bool
+	FinalState bool // true if current node reached final state
 }
 
 func NewTrieHashNode() (tNode *TrieHashNode) {
@@ -24,6 +25,7 @@ func (root *TrieHashNode) Insert(key []byte) {
 		tNode = tNode.Children[index]
 	}
 
+	// mark last node as final node.
 	tNode.FinalState = true
 }
 
