@@ -1,18 +1,22 @@
 package trie
 
-// Trie representation using hash-table
-type TrieHashNode struct {
-	Children map[byte]*TrieHashNode // child nodes
+// HashNode represents TrieNode using hash-table
+type HashNode struct {
+	// Child nodes
+	Children map[byte]*HashNode
 
-	FinalState bool // true if current node reached final state
+	// True if current node reached final state
+	FinalState bool
 }
 
-func NewTrieHashNode() (tNode *TrieHashNode) {
-	tNode = &TrieHashNode{Children: make(map[byte]*TrieHashNode), FinalState: false}
+// NewHashNode returns new trie hashNode
+func NewHashNode() (tNode *HashNode) {
+	tNode = &HashNode{Children: make(map[byte]*HashNode), FinalState: false}
 	return
 }
 
-func (root *TrieHashNode) Insert(key []byte) {
+// Insert key in trie datastructure
+func (root *HashNode) Insert(key []byte) {
 	var index byte
 
 	tNode := root
@@ -20,7 +24,7 @@ func (root *TrieHashNode) Insert(key []byte) {
 		index = key[level]
 
 		if tNode.Children[index] == nil {
-			tNode.Children[index] = NewTrieHashNode()
+			tNode.Children[index] = NewHashNode()
 		}
 		tNode = tNode.Children[index]
 	}
@@ -29,7 +33,9 @@ func (root *TrieHashNode) Insert(key []byte) {
 	tNode.FinalState = true
 }
 
-func (root *TrieHashNode) Search(key []byte) (found bool, final bool) {
+// Search for key in trie datastructure
+// returns found=true if the given string is found and returns final=true if the string reached final state in trie state machine
+func (root *HashNode) Search(key []byte) (found bool, final bool) {
 	var index byte
 
 	tNode := root

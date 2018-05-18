@@ -12,7 +12,7 @@ import (
 // M represents mspm-model.
 type M struct {
 	Name     string // Name representing mspm model
-	trieNode *trie.TrieHashNode
+	trieNode *trie.HashNode
 }
 
 // Output defines the output of mspm.
@@ -22,7 +22,7 @@ type Output map[string]int32
 
 // NewModel will return a fresh new model
 func NewModel(name string) *M {
-	return &M{Name: name, trieNode: trie.NewTrieHashNode()}
+	return &M{Name: name, trieNode: trie.NewHashNode()}
 }
 
 // Build trie datastructure that accepts multiline list of words.

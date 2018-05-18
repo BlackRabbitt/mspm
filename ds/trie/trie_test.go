@@ -5,8 +5,8 @@ import "math/rand"
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-func TestTrieNode(t *testing.T) {
-	trieNode := NewTrieNode()
+func TestNode(t *testing.T) {
+	trieNode := NewNode()
 
 	if trieNode.FinalState {
 		t.Error("New Node should not be final.")
@@ -42,8 +42,8 @@ func TestTrieNode(t *testing.T) {
 	}
 }
 
-func TestTrieHashNode(t *testing.T) {
-	trieNode := NewTrieHashNode()
+func TestHashNode(t *testing.T) {
+	trieNode := NewHashNode()
 
 	if trieNode.FinalState {
 		t.Error("New Node should not be final.")
@@ -82,32 +82,32 @@ func TestTrieHashNode(t *testing.T) {
 
 }
 
-func BenchmarkTrieNodeInsert(b *testing.B) {
-	tNode := NewTrieNode()
+func BenchmarkNodeInsert(b *testing.B) {
+	tNode := NewNode()
 	for i := 0; i < b.N; i++ {
 		a := makeByteArray(5)
 		tNode.Insert(a)
 	}
 }
 
-func BenchmarkTrieNodeSearch(b *testing.B) {
-	tNode := NewTrieNode()
+func BenchmarkNodeSearch(b *testing.B) {
+	tNode := NewNode()
 	for i := 0; i < b.N; i++ {
 		c := makeByteArray(5)
 		tNode.Search(c)
 	}
 }
 
-func BenchmarkTrieHashNodeInsert(b *testing.B) {
-	thNode := NewTrieHashNode()
+func BenchmarkHashNodeInsert(b *testing.B) {
+	thNode := NewHashNode()
 	for i := 0; i < b.N; i++ {
 		a := makeByteArray(5)
 		thNode.Insert(a)
 	}
 }
 
-func BenchmarkTrieHashNodeSearch(b *testing.B) {
-	tNode := NewTrieHashNode()
+func BenchmarkHashNodeSearch(b *testing.B) {
+	tNode := NewHashNode()
 	for i := 0; i < b.N; i++ {
 		c := makeByteArray(5)
 		tNode.Search(c)
