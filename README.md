@@ -1,4 +1,6 @@
 # Multi-String Pattern Matching algorithm.
+[![Go Report Card](https://goreportcard.com/badge/github.com/BlackRabbitt/mspm)](https://goreportcard.com/report/github.com/BlackRabbitt/mspm)
+
 This implementation is inspired from [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
 
 [GoDoc Api Documentation](https://godoc.org/github.com/BlackRabbitt/mspm)
@@ -18,10 +20,9 @@ output, err := modelA.MultiTermMatch(document)
 // output ~= [{matched_word: n_count}, ..]
 ```
 
-## Test Coverage and ReportCard service link
+## Test Coverage
 * [trie package](https://gocover.io/github.com/blackrabbitt/mspm/ds/trie)
 * [mspm package](https://gocover.io/github.com/blackrabbitt/mspm/search)
-* [report card](https://goreportcard.com/report/github.com/BlackRabbitt/mspm)
 
 ## TrieNode vs TrieHashNode benchmark
 ```
