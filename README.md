@@ -1,5 +1,6 @@
 # Multi-String Pattern Matching algorithm.
 This implementation is inspired from [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
+[GoDoc Api Documentation](https://godoc.org/github.com/BlackRabbitt/mspm)
 
 ## Getting Started
 ```
@@ -16,14 +17,13 @@ output, err := modelA.MultiTermMatch(document)
 // output ~= [{matched_word: n_count}, ..]
 ```
 
-Refer to doc and test for more usage.
+## Test Coverage and ReportCard service link
+* [trie package](https://gocover.io/github.com/blackrabbitt/mspm/ds/trie)
+* [mspm package](https://gocover.io/github.com/blackrabbitt/mspm/search)
+* [report card](https://goreportcard.com/report/github.com/BlackRabbitt/mspm)
+
+## TrieNode vs TrieHashNode benchmark
 ```
-# generate godoc
-$ godoc -http=:6060
-# Browse mspm documentation at: http://localhost:6060/pkg/github.com/BlackRabbitt/mspm/
-```
-```
-# TrieNode vs TrieHashNode benchmark
 $ cd github.com/BlackRabbitt/mspm/ds/trie
 $ go test -bench=.
 goos: darwin
@@ -41,5 +41,3 @@ ok      github.com/BlackRabbitt/mspm/ds/trie	8.795s
 1. [Trie](https://en.wikipedia.org/wiki/Trie)
 2. [mspm](http://www.ijsrp.org/research_paper_jul2012/ijsrp-july-2012-101.pdf) - Multi-String Pattern Matching algorithm. Generally used for Information Retrieval See test for more details.
 3. [Aho-Corasick algorithm](http://www.ijsrp.org/research_paper_jul2012/ijsrp-july-2012-101.pdf)
-
-Tested Latest Go Version: ```1.10.2```
