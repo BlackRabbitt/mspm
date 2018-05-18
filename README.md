@@ -1,5 +1,6 @@
 # Multi-String Pattern Matching algorithm.
 This implementation is inspired from [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
+
 [GoDoc Api Documentation](https://godoc.org/github.com/BlackRabbitt/mspm)
 
 ## Getting Started
@@ -39,5 +40,5 @@ ok      github.com/BlackRabbitt/mspm/ds/trie	8.795s
 
 ## Resources
 1. [Trie](https://en.wikipedia.org/wiki/Trie)
-2. [mspm](http://www.ijsrp.org/research_paper_jul2012/ijsrp-july-2012-101.pdf) - Multi-String Pattern Matching algorithm. Generally used for Information Retrieval See test for more details.
-3. [Aho-Corasick algorithm](http://www.ijsrp.org/research_paper_jul2012/ijsrp-july-2012-101.pdf)
+2. [mspm](http://www.ijsrp.org/research_paper_jul2012/ijsrp-july-2012-101.pdf) - Multi-String Pattern Matching algorithm. Generally used for Information Retrieval.
+3. [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
