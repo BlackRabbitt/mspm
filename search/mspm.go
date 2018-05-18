@@ -1,8 +1,4 @@
-// mspm - Multi String Pattern-Matching
-// Information Retrival System
-// mspm implements trieHashNode data structure for building trie for list of words.
-// specific/multiple keyword can then be searched in the tree in linear time.
-// refer to example for more detail on implementation
+// Package mspm provides model that will have collection of trieNodes that represent the patterns to be searched in a document.
 package mspm
 
 import (
@@ -13,7 +9,7 @@ import (
 	"github.com/BlackRabbitt/mspm/ds/trie"
 )
 
-// mspm Model.
+// M represents mspm-model.
 type M struct {
 	Name     string // Name representing mspm model
 	trieNode *trie.TrieHashNode
@@ -24,20 +20,21 @@ type M struct {
 // int32 - Count of term in that document
 type Output map[string]int32
 
+// NewModel will return a fresh new model
 func NewModel(name string) *M {
 	return &M{Name: name, trieNode: trie.NewTrieHashNode()}
 }
 
-// Build builds trie datastructure that accepts multiline list of words.
-func (self *M) Build(words io.Reader) {
+// Build trie datastructure that accepts multiline list of words.
+func (model *M) Build(words io.Reader) {
 	scanner := bufio.NewScanner(words)
 	for scanner.Scan() {
-		self.trieNode.Insert(scanner.Bytes())
+		model.trieNode.Insert(scanner.Bytes())
 	}
 }
 
-// Returns all the trie-terms found in document.
-func (self *M) MultiTermMatch(document io.Reader) (output Output, err error) {
+// MultiTermMatch returns all the trie-terms found in document.
+func (model *M) MultiTermMatch(document io.Reader) (output Output, err error) {
 	output = make(map[string]int32)
 	content, err := ioutil.ReadAll(document)
 
@@ -46,7 +43,7 @@ func (self *M) MultiTermMatch(document io.Reader) (output Output, err error) {
 	}
 
 	var index byte
-	tNode := self.trieNode
+	tNode := model.trieNode
 
 	// start and end pointer select the current valid term. It is adjusted itself over time.
 	startPointer := 0
@@ -58,12 +55,12 @@ func (self *M) MultiTermMatch(document io.Reader) (output Output, err error) {
 		if tNode.Children[index] == nil {
 			if endPointer > startPointer {
 				term := string(content[startPointer : endPointer+1])
-				output[term] += 1
+				output[term]++
 			}
 			startPointer = level + 1
 			endPointer = startPointer
 
-			tNode = self.trieNode
+			tNode = model.trieNode
 			continue
 		}
 
@@ -75,9 +72,9 @@ func (self *M) MultiTermMatch(document io.Reader) (output Output, err error) {
 				continue
 			}
 			term := string(content[startPointer : endPointer+1]) // exclusive
-			output[term] += 1
+			output[term]++
 			startPointer = level + 1
-			tNode = self.trieNode
+			tNode = model.trieNode
 			continue
 		}
 	}
