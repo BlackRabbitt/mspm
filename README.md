@@ -1,9 +1,8 @@
 # Multi-String Pattern Matching algorithm.
 [![Go Report Card](https://goreportcard.com/badge/github.com/BlackRabbitt/mspm)](https://goreportcard.com/report/github.com/BlackRabbitt/mspm)
+[![GoDoc](https://godoc.org/github.com/BlackRabbitt/mspm?status.svg)](https://godoc.org/github.com/BlackRabbitt/mspm)
 
 This implementation is inspired from [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
-
-[GoDoc Api Documentation](https://godoc.org/github.com/BlackRabbitt/mspm)
 
 ## Getting Started
 ```
