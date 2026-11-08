@@ -1,44 +1,71 @@
-# Multi-String Pattern Matching algorithm.
-[![Go Report Card](https://goreportcard.com/badge/github.com/BlackRabbitt/mspm)](https://goreportcard.com/report/github.com/BlackRabbitt/mspm)
-[![GoDoc](https://godoc.org/github.com/BlackRabbitt/mspm?status.svg)](https://godoc.org/github.com/BlackRabbitt/mspm)
+# mspm
 
-This implementation is inspired from [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
+`mspm` is a Go library for matching a set of literal byte-string patterns in a document and counting the matches. It uses a trie and is inspired by the [Aho–Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm).
 
-## Getting Started
-```
-modelA = mspm.NewModel("mspm_model_A")
-patternsToSearch = strings.NewReader(words) // words is newline seperated list of words/keywords
+> **Status:** This project is being revived. The current implementation is small and has known limitations; review the behavior below before using it for production workloads.
 
-// build mspm model with patterns
-modelA.Build(patternsToSearch)
+## Requirements
 
-inputString := "input document where the above pattern is searched for."
-document := strings.NewReader(inputString)
-output, err := modelA.MultiTermMatch(document)
+- Go 1.27 or newer
 
-// output ~= [{matched_word: n_count}, ..]
+## Install
+
+```sh
+go get github.com/BlackRabbitt/mspm
 ```
 
-## Test Coverage
-* [trie package](https://gocover.io/github.com/blackrabbitt/mspm/ds/trie)
-* [mspm package](https://gocover.io/github.com/blackrabbitt/mspm/search)
+The matcher API currently lives in the `search` package:
 
-## TrieNode vs TrieHashNode benchmark
-```
-$ cd github.com/BlackRabbitt/mspm/ds/trie
-$ go test -bench=.
-goos: darwin
-goarch: amd64
-pkg: github.com/BlackRabbitt/mspm/ds/trie
-BenchmarkTrieNodeInsert-4             500000          2582 ns/op
-BenchmarkTrieNodeSearch-4           10000000           205 ns/op
-BenchmarkTrieHashNodeInsert-4        1000000          1491 ns/op
-BenchmarkTrieHashNodeSearch-4       10000000           206 ns/op
-PASS
-ok      github.com/BlackRabbitt/mspm/ds/trie	8.795s
+```go
+import "github.com/BlackRabbitt/mspm/search"
 ```
 
-## Resources
-1. [Trie](https://en.wikipedia.org/wiki/Trie)
-2. [mspm](http://www.ijsrp.org/research_paper_jul2012/ijsrp-july-2012-101.pdf) - Multi-String Pattern Matching algorithm. Generally used for Information Retrieval.
-3. [Aho-Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
+## Example
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/BlackRabbitt/mspm/search"
+)
+
+func main() {
+	model := search.NewModel("keywords")
+	model.Build(strings.NewReader("mspm\npattern\nsearch\n"))
+
+	counts, err := model.MultiTermMatch(strings.NewReader("mspm pattern search mspm"))
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(counts["mspm"])    // 2
+	fmt.Println(counts["pattern"]) // 1
+	fmt.Println(counts["search"])  // 1
+}
+```
+
+Patterns are supplied one per line to `Build`. Matching is case-sensitive. `MultiTermMatch` reads the document and returns counts keyed by the matched pattern.
+
+## Current behavior and limitations
+
+- The implementation works on bytes, so it does not provide Unicode-aware character matching.
+- Matches are consumed as the scan proceeds; overlapping matches are not all reported.
+- The matcher is trie-based, but does not currently implement the failure links used by the full Aho–Corasick algorithm.
+- `Build` does not return scanner errors, so unusually long pattern lines may not be reported to the caller.
+
+These constraints are part of the current implementation and may change as the project is improved.
+
+## Development
+
+Run the package tests with:
+
+```sh
+go test ./...
+```
+
+## License
+
+BSD-3-Clause. See [LICENSE](LICENSE).
